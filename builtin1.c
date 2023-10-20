@@ -1,9 +1,11 @@
 #include "shell.h"
 
 /**
- * _myhistory - displays the history list, one command by line, preceded
+ * _myhistory - Function to display the history list, one command by line,
+ * preceded
  *              with line numbers, starting at 0.
- * @info: Structure containing potential arguments. Used to maintain
+ * @info: Pointer to the structure containing potential arguments.
+ * that is used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
@@ -14,9 +16,9 @@ int _myhistory(info_t *info)
 }
 
 /**
- * unset_alias - sets alias to string
- * @info: parameter struct
- * @str: the string alias
+ * unset_alias - Sets alias to string
+ * @info: Ponter to the parameter struct
+ * @str: Poiinter to the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
@@ -37,9 +39,9 @@ int unset_alias(info_t *info, char *str)
 }
 
 /**
- * set_alias - sets alias to string
- * @info: parameter struct
- * @str: the string alias
+ * set_alias - Sets alias to string
+ * @info: Pointer to the parameter struct
+ * @str: Pointer to the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
@@ -58,8 +60,8 @@ int set_alias(info_t *info, char *str)
 }
 
 /**
- * print_alias - prints an alias string
- * @node: the alias node
+ * print_alias - Function prints an alias string
+ * @node: Pointer to the alias node
  *
  * Return: Always 0 on success, 1 on error
  */
@@ -81,8 +83,9 @@ int print_alias(list_t *node)
 }
 
 /**
- * _myalias - mimics the alias builtin (man alias)
- * @info: Structure containing potential arguments. Used to maintain
+ * _myalias - Copies the alias builtin (man alias)
+ * @info: Pointer to the structure containing potential arguments.
+ * that is used to maintain
  *          constant function prototype.
  *  Return: Always 0
  */
