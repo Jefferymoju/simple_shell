@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * get_history_file - Gets the history file
- * @info: Pointer to the parameter struct
+ * get_history_file - gets the history file
+ * @info: parameter struct
  *
- * Return: Allocated string
+ * Return: allocated string containg history file
  */
 
 char *get_history_file(info_t *info)
@@ -25,8 +25,8 @@ char *get_history_file(info_t *info)
 }
 
 /**
- * write_history - Creates a file, or appends to an existing one.
- * @info: Poiter to the parameter struct
+ * write_history - creates a file, or appends to an existing file
+ * @info: the parameter struct
  *
  * Return: 1 on success, else -1
  */
@@ -54,10 +54,10 @@ int write_history(info_t *info)
 }
 
 /**
- * read_history - Reads history from file
- * @info: Pointer to the parameter struct
+ * read_history - reads history from file
+ * @info: the parameter struct
  *
- * Return: history count on success, 0 otherwise
+ * Return: histcount on success, 0 otherwise
  */
 int read_history(info_t *info)
 {
@@ -103,11 +103,10 @@ int read_history(info_t *info)
 }
 
 /**
- * build_history_list - Adds entry to a history linked list
- * @info: Pointer to the structure containing potential arguments.
- * thats is used to maintain
- * @buf: Pointer to the buffer
- * @linecount: The history linecount, histcount
+ * build_history_list - adds entry to a history linked list
+ * @info: Structure containing potential arguments. Used to maintain
+ * @buf: buffer
+ * @linecount: the history linecount, histcount
  *
  * Return: Always 0
  */
@@ -125,21 +124,20 @@ int build_history_list(info_t *info, char *buf, int linecount)
 }
 
 /**
- * renumber_history - Renumbers the history linked list after changes
- * @info: Pointer to the structure containing potential arguments.
- * that is used to maintain
+ * renumber_history - renumbers the history linked list after changes
+ * @info: Structure containing potential arguments. Used to maintain
  *
  * Return: the new histcount
  */
 int renumber_history(info_t *info)
 {
 	list_t *node = info->history;
-	int j = 0;
+	int i = 0;
 
 	while (node)
 	{
-		node->num = j++;
+		node->num = i++;
 		node = node->next;
 	}
-	return (info->histcount = j);
+	return (info->histcount = i);
 }

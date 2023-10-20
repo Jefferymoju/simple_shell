@@ -1,27 +1,26 @@
 #include "shell.h"
 
 /**
- *_putsfd - Prints an input string
- * @str: Pinter to the string to be printed
- * @fd: The filedescriptor to write to
+ *_eputs - prints an input string
+ * @str: the string to be printed
  *
- * Return: the number of chars put
+ * Return: Nothing
  */
-int _putsfd(char *str, int fd)
+void _eputs(char *str)
 {
-	int j = 0;
+	int i = 0;
 
 	if (!str)
-		return (0);
-	while (*str)
+		return;
+	while (str[i] != '\0')
 	{
-		j += _putfd(*str++, fd);
+		_eputchar(str[i]);
+		i++;
 	}
-	return (j);
 }
 
 /**
- * _eputchar - Writes the character c to stderr
+ * _eputchar - writes the character c to stderr
  * @c: The character to print
  *
  * Return: On success 1.
@@ -29,40 +28,21 @@ int _putsfd(char *str, int fd)
  */
 int _eputchar(char c)
 {
-	static int j;
+	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || j >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(2, buf, j);
-		j = 0;
+		write(2, buf, i);
+		i = 0;
 	}
 	if (c != BUF_FLUSH)
-		buf[j++] = c;
+		buf[i++] = c;
 	return (1);
 }
 
 /**
- *_eputs - Prints an input string
- * @str: Pointer to the string to be printed
- *
- * Return: Nothing
- */
-void _eputs(char *str)
-{
-	int j = 0;
-
-	if (!str)
-		return;
-	while (str[j] != '\0')
-	{
-		_eputchar(str[j]);
-		j++;
-	}
-}
-
-/**
- * _putfd - Writes the character c to given fd
+ * _putfd - writes the character c to given fd
  * @c: The character to print
  * @fd: The filedescriptor to write to
  *
@@ -71,15 +51,35 @@ void _eputs(char *str)
  */
 int _putfd(char c, int fd)
 {
-	static int j;
+	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || j >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(fd, buf, j);
-		j = 0;
+		write(fd, buf, i);
+		i = 0;
 	}
 	if (c != BUF_FLUSH)
-		buf[j++] = c;
+		buf[i++] = c;
 	return (1);
+}
+
+/**
+ *_putsfd - prints an input string
+ * @str: the string to be printed
+ * @fd: the filedescriptor to write to
+ *
+ * Return: the number of chars put
+ */
+int _putsfd(char *str, int fd)
+{
+	int i = 0;
+
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		i += _putfd(*str++, fd);
+	}
+	return (i);
 }
