@@ -70,6 +70,20 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 }
 
 /**
+ * replace_string - Replaces string
+ * @old: Pointer to the address of old string
+ * @new: Pointer to the new string
+ *
+ * Return: 1 if replaced, 0 otherwise
+ */
+int replace_string(char **old, char *new)
+{
+	free(*old);
+	*old = new;
+	return (1);
+}
+
+/**
  * replace_alias - Replaces an aliases in the tokenized string
  * @info: Pointer to the parameter struct
  *
@@ -137,18 +151,4 @@ int replace_vars(info_t *info)
 
 	}
 	return (0);
-}
-
-/**
- * replace_string - Replaces string
- * @old: Pointer to the address of old string
- * @new: Pointer to the new string
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int replace_string(char **old, char *new)
-{
-	free(*old);
-	*old = new;
-	return (1);
 }

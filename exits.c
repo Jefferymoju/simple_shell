@@ -31,6 +31,22 @@ char *_strncpy(char *dest, char *src, int n)
 }
 
 /**
+ **_strchr - Locates a character in a string
+ *@s: Pointer to the string to be parsed
+ *@c: The character to look for
+ *Return: (s) a pointer to the memory area s
+ */
+char *_strchr(char *s, char c)
+{
+	do {
+		if (*s == c)
+			return (s);
+	} while (*s++ != '\0');
+
+	return (NULL);
+}
+
+/**
  **_strncat - Fubnciton to concatenate two strings
  *@dest: Pointer to the first string
  *@src: Pointer to the second string
@@ -55,20 +71,4 @@ char *_strncat(char *dest, char *src, int n)
 	if (j < n)
 		dest[i] = '\0';
 	return (s);
-}
-
-/**
- **_strchr - Locates a character in a string
- *@s: Pointer to the string to be parsed
- *@c: The character to look for
- *Return: (s) a pointer to the memory area s
- */
-char *_strchr(char *s, char c)
-{
-	do {
-		if (*s == c)
-			return (s);
-	} while (*s++ != '\0');
-
-	return (NULL);
 }

@@ -25,32 +25,25 @@ char *get_history_file(info_t *info)
 }
 
 /**
- * write_history - Creates a file, or appends to an existing file
- * @info: Pointer to the parameter struct
+ * build_history_list - Adds entry to a history linked list
+ * @info: Pointer to the structure containing potential arguments.
+ * that is used to maintain
+ * @buf: buffer
+ * @linecount: The history linecount, histcount
  *
- * Return: 1 on success, else -1
+ * Return: Always 0
  */
-int write_history(info_t *info)
+int build_history_list(info_t *info, char *buf, int linecount)
 {
-	ssize_t fd;
-	char *filename = get_history_file(info);
 	list_t *node = NULL;
 
-	if (!filename)
-		return (-1);
+	if (info->history)
+		node = info->history;
+	add_node_end(&node, buf, linecount);
 
-	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	free(filename);
-	if (fd == -1)
-		return (-1);
-	for (node = info->history; node; node = node->next)
-	{
-		_putsfd(node->str, fd);
-		_putfd('\n', fd);
-	}
-	_putfd(BUF_FLUSH, fd);
-	close(fd);
-	return (1);
+	if (!info->history)
+		info->history = node;
+	return (0);
 }
 
 /**
@@ -103,28 +96,6 @@ int read_history(info_t *info)
 }
 
 /**
- * build_history_list - Adds entry to a history linked list
- * @info: Pointer to the structure containing potential arguments.
- * that is used to maintain
- * @buf: buffer
- * @linecount: The history linecount, histcount
- *
- * Return: Always 0
- */
-int build_history_list(info_t *info, char *buf, int linecount)
-{
-	list_t *node = NULL;
-
-	if (info->history)
-		node = info->history;
-	add_node_end(&node, buf, linecount);
-
-	if (!info->history)
-		info->history = node;
-	return (0);
-}
-
-/**
  * renumber_history - Renumbers the history linked list after changes
  * @info: Pointer to the structure containing potential arguments.
  * that is used to maintain
@@ -142,4 +113,33 @@ int renumber_history(info_t *info)
 		node = node->next;
 	}
 	return (info->histcount = i);
+}
+
+/**
+ * write_history - Creates a file, or appends to an existing file
+ * @info: Pointer to the parameter struct
+ *
+ * Return: 1 on success, else -1
+ */
+int write_history(info_t *info)
+{
+	ssize_t fd;
+	char *filename = get_history_file(info);
+	list_t *node = NULL;
+
+	if (!filename)
+		return (-1);
+
+	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	free(filename);
+	if (fd == -1)
+		return (-1);
+	for (node = info->history; node; node = node->next)
+	{
+		_putsfd(node->str, fd);
+		_putfd('\n', fd);
+	}
+	_putfd(BUF_FLUSH, fd);
+	close(fd);
+	return (1);
 }

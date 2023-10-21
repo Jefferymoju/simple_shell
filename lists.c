@@ -34,6 +34,30 @@ list_t *add_node(list_t **head, const char *str, int num)
 }
 
 /**
+ * free_list - Frees all nodes of a list
+ * @head_ptr: Address of pointer to head node
+ *
+ * Return: Void
+ */
+void free_list(list_t **head_ptr)
+{
+	list_t *node, *next_node, *head;
+
+	if (!head_ptr || !*head_ptr)
+		return;
+	head = *head_ptr;
+	node = head;
+	while (node)
+	{
+		next_node = node->next;
+		free(node->str);
+		free(node);
+		node = next_node;
+	}
+	*head_ptr = NULL;
+}
+
+/**
  * add_node_end - Function to add a node to the end of the list
  * @head: Pointer to the  address of the head node
  * @str: Poiner to the str field of node
@@ -72,26 +96,6 @@ list_t *add_node_end(list_t **head, const char *str, int num)
 	else
 		*head = new_node;
 	return (new_node);
-}
-
-/**
- * print_list_str - Prints only the str element of a list_t linked list
- * @h: Pointer to the first node
- *
- * Return: Size of list
- */
-size_t print_list_str(const list_t *h)
-{
-	size_t i = 0;
-
-	while (h)
-	{
-		_puts(h->str ? h->str : "(nil)");
-		_puts("\n");
-		h = h->next;
-		i++;
-	}
-	return (i);
 }
 
 /**
@@ -135,25 +139,21 @@ int delete_node_at_index(list_t **head, unsigned int index)
 }
 
 /**
- * free_list - Frees all nodes of a list
- * @head_ptr: Address of pointer to head node
+ * print_list_str - Prints only the str element of a list_t linked list
+ * @h: Pointer to the first node
  *
- * Return: Void
+ * Return: Size of list
  */
-void free_list(list_t **head_ptr)
+size_t print_list_str(const list_t *h)
 {
-	list_t *node, *next_node, *head;
+	size_t i = 0;
 
-	if (!head_ptr || !*head_ptr)
-		return;
-	head = *head_ptr;
-	node = head;
-	while (node)
+	while (h)
 	{
-		next_node = node->next;
-		free(node->str);
-		free(node);
-		node = next_node;
+		_puts(h->str ? h->str : "(nil)");
+		_puts("\n");
+		h = h->next;
+		i++;
 	}
-	*head_ptr = NULL;
+	return (i);
 }

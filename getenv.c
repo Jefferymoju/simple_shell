@@ -1,24 +1,6 @@
 #include "shell.h"
 
 /**
- * get_environ - Returns the string array copy of our environ
- * @info: Pointer to the structure containing potential arguments.
- * that is used to maintain
- *          constant function prototype.
- * Return: Always 0
- */
-char **get_environ(info_t *info)
-{
-	if (!info->environ || info->env_changed)
-	{
-		info->environ = list_to_strings(info->env);
-		info->env_changed = 0;
-	}
-
-	return (info->environ);
-}
-
-/**
  * _unsetenv - Funtiom tp remove an environment variable
  * @info: Pointer to the structure containing potential arguments.
  * that is used to maintain
@@ -49,6 +31,24 @@ int _unsetenv(info_t *info, char *var)
 		i++;
 	}
 	return (info->env_changed);
+}
+
+/**
+ * get_environ - Returns the string array copy of our environ
+ * @info: Pointer to the structure containing potential arguments.
+ * that is used to maintain
+ *          constant function prototype.
+ * Return: Always 0
+ */
+char **get_environ(info_t *info)
+{
+	if (!info->environ || info->env_changed)
+	{
+		info->environ = list_to_strings(info->env);
+		info->env_changed = 0;
+	}
+
+	return (info->environ);
 }
 
 /**
